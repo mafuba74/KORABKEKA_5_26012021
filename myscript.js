@@ -1,31 +1,50 @@
 
-
-let myRequest = new XMLHttpRequest()
-myRequest.onreadystatechange = function(){
-    if(this.readyState == XMLHttpRequest.DONE && this.status == 200){
-        let results = JSON.parse(this.responseText)
-        console.log(results)
-        
-        let itemCards = document.querySelectorAll('.card-body')
-        let itemImages = document.querySelectorAll('card-img-top')
-        
-        for(let i = 0; i < results.length; i++){
-            let teddy = results[i]           
-            let itemCard = itemCards[i]
-            itemCard.setAttribute('id', "teddy" + [i])
-            let itemImage = document.createElement("img")
-            itemImage.setAttribute('src', teddy.imageUrl)
-            itemImage.setAttribute('alt', 'ours en peluche')
-            itemImage.className = 'card-img-top'
-            itemCard.appendChild(itemImage)
-            console.log(teddy + itemCard)
-        }        
-    }
-   
+    let myRequest = new XMLHttpRequest()
     
-}
-myRequest.open("GET", "http://localhost:3000/api/teddies")
-myRequest.send()
+    myRequest.onreadystatechange = function(){
+        if(this.readyState == XMLHttpRequest.DONE && this.status == 200){
+            let results = JSON.parse(this.responseText)
+
+            cardBuilder(results)
+        }
+    }
+    myRequest.open("GET", "http://localhost:3000/api/teddies")
+    myRequest.send()
+    
+    let cardBody = document.querySelectorAll('.card-body')
+    
+    let cardBuilder = function(data) {
+        
+        
+        console.log(cardBody)
+        for(let i = 0; i < data.length; i++){
+                cardBody[i].setAttribute('id', data[i]._id)
+                cardBody[i].setAttribute('href', 'produit.html?' + data[i]._id)
+                let cardImage = document.createElement('img')
+                let cardName = document.createElement('h3')
+                let cardPrice = document.createElement('p')
+
+                cardBody[i].appendChild(cardImage)
+                cardBody[i].appendChild(cardName)
+                cardBody[i].appendChild(cardPrice)
+
+                cardImage.setAttribute('src', data[i].imageUrl)
+                cardImage.className = 'card-img-top'
+
+                cardName.className = 'card-title'
+                cardName.textContent = data[i].name
+
+                cardPrice.textContent = data[i].price + ' €'
+                
+        } 
+    }
+
+     
+
+//queryParams
+
+
+
 
 
 
