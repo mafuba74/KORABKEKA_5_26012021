@@ -14,9 +14,7 @@
     let cardBody = document.querySelectorAll('.card-body')
     
     let cardBuilder = function(data) {
-        
-        
-        console.log(cardBody)
+
         for(let i = 0; i < data.length; i++){
                 cardBody[i].setAttribute('id', data[i]._id)
                 cardBody[i].setAttribute('href', 'produit.html?' + data[i]._id)
