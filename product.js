@@ -20,9 +20,15 @@ let myRequest = new XMLHttpRequest()
     myRequest.open("GET", "http://localhost:3000/api/teddies")
     myRequest.send()
 
+    let items = []
+    let myItem =""
+
+
     let checkTeddy = function(data){
         for(let i = 0; i < data.length; i++){
+            
             if(urlSplit[1] == data[i]._id){
+                
                 teddyName.textContent = data[i].name
                 teddyImg.setAttribute('src', data[i].imageUrl)
                 teddyDescribe.textContent = data[i].description
@@ -34,7 +40,20 @@ let myRequest = new XMLHttpRequest()
                     colorOption.textContent = data[i].colors[j]
                     selectColor.appendChild(colorOption)
                 }
+                items.push(JSON.stringify(data[i]))
+                myItem = JSON.parse(items)
+                console.log(myItem)
             }
+            
+        }
+    }
+    
+    
+
+
+    let storageTeddy = function(){
+        for(let i = 0; i < items.length; i++){
+            localStorage.setItem()
         }
     }
 
