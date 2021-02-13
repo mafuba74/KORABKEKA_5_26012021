@@ -42,7 +42,7 @@ let myRequest = new XMLHttpRequest()
                 }
                 items.push(JSON.stringify(data[i]))
                 myItem = JSON.parse(items)
-                console.log(myItem)
+                storageTeddy(myItem)
             }
             
         }
@@ -51,10 +51,8 @@ let myRequest = new XMLHttpRequest()
     
 
 
-    let storageTeddy = function(){
-        for(let i = 0; i < items.length; i++){
-            localStorage.setItem()
-        }
+    let storageTeddy = function(object){
+        localStorage.setItem("id", myItem._id)
     }
 
     
