@@ -47,12 +47,17 @@ let myRequest = new XMLHttpRequest()
             
         }
     }
-    
-    
 
+let button = document.querySelector('.panier')
+    
+let storageTeddy = function(obj){
+    button.addEventListener('click', () => {
+            for (let k = 0; k < obj.length; k++) {
+                let info = obj[k]
+                localStorage.setItem(info.key(k), info)
+            }
+        })          
+} 
 
-    let storageTeddy = function(object){
-        localStorage.setItem("id", myItem._id)
-    }
 
     
