@@ -20,15 +20,17 @@ let myRequest = new XMLHttpRequest()
     myRequest.open("GET", "http://localhost:3000/api/teddies")
     myRequest.send()
 
-    let items = []
-    let myItem =""
-
-
+    let myItem = ""
+    let itemKey
+    let button = document.querySelector('.panier')
     let checkTeddy = function(data){
         for(let i = 0; i < data.length; i++){
             
             if(urlSplit[1] == data[i]._id){
-                
+                itemKey = data[i].name
+                console.log(itemKey)
+                myItem = JSON.stringify(data[i])
+                storageTeddy(myItem, itemKey)
                 teddyName.textContent = data[i].name
                 teddyImg.setAttribute('src', data[i].imageUrl)
                 teddyDescribe.textContent = data[i].description
@@ -40,24 +42,19 @@ let myRequest = new XMLHttpRequest()
                     colorOption.textContent = data[i].colors[j]
                     selectColor.appendChild(colorOption)
                 }
-                items.push(JSON.stringify(data[i]))
-                myItem = JSON.parse(items)
-                storageTeddy(myItem)
-            }
-            
+            }          
         }
     }
 
-let button = document.querySelector('.panier')
-    
-let storageTeddy = function(obj){
-    button.addEventListener('click', () => {
-            for (let k = 0; k < obj.length; k++) {
-                let info = obj[k]
-                localStorage.setItem(info.key(k), info)
-            }
-        })          
-} 
+    let storageTeddy = function(obj, key){
+        button.addEventListener('click', function(){
+            localStorage.setItem(key, obj)
+            console.log(localStorage)
+        })
+        
+    }
+
+
 
 
     
