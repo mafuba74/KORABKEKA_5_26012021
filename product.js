@@ -9,9 +9,6 @@ let teddyDescribe = document.querySelector('.card-text')
 let teddyPrice = document.querySelector('.price')
 let selectColor = document.querySelector('#choose-color')
 
-console.log(urlInfo)
-console.log(urlSplit)
-
 //requete ajax
 let myRequest = new XMLHttpRequest()
     
@@ -19,7 +16,6 @@ let myRequest = new XMLHttpRequest()
         if(this.readyState == XMLHttpRequest.DONE && this.status == 200){
             let results = JSON.parse(this.responseText)
             checkTeddy(results)
-            console.log(results)
         }
     }
     myRequest.open("GET", "http://localhost:3000/api/teddies")
@@ -32,8 +28,8 @@ let myRequest = new XMLHttpRequest()
         for(let i = 0; i < data.length; i++){
             
             if(urlSplit[1] == data[i]._id){
-                //const newProduct = new products(data[i].name, data[i]._id, data[i].price, data[i].imageUrl, 1)
-                storageItem(data[i])
+                const newProduct = new products(data[i].name, data[i]._id, data[i].price, data[i].imageUrl, 1)
+                storageItem(newProduct)
                 teddyName.textContent = data[i].name
                 teddyImg.setAttribute('src', data[i].imageUrl)
                 teddyDescribe.textContent = data[i].description
@@ -51,7 +47,7 @@ let myRequest = new XMLHttpRequest()
     }
 
     let button = document.querySelector('.panier')
-    let storageProd = []
+    
 
     class products{
         constructor(name, id, price, img, quantity){
@@ -70,26 +66,31 @@ let myRequest = new XMLHttpRequest()
     let storageItem = function(obj){
         button.addEventListener('click', function(e){
             
-            e.preventDefault()
-            let newProduct = new products(obj.name, obj._id, obj.price, obj.imageUrl, 1)
-            console.log(newProduct)
-            if(localStorage.length === 0){
-                localStorage.setItem('products', JSON.stringify(newProduct))
-                console.log(localStorage)
-                //localStorage.clear()
-            } else if(localStorage.getItem('products').includes(JSON.stringify(newProduct))){
-                newProduct = new products(JSON.parse(localStorage.getItem('products')))
-                localStorage.removeItem('products')
-                newProduct.addQuantity()
-                localStorage.setItem('products', JSON.stringify(newProduct))
-                console.log(localStorage)
-            }  
+            //e.preventDefault()
 
+            let prodTable = []
             
+            if(localStorage.getItem('products') == null){
+                prodTable.push(obj)
+                localStorage.setItem('products', JSON.stringify(prodTable))
+            }else if(localStorage.getItem('products').includes(obj.id)){
+                let getStorage = JSON.parse(localStorage.getItem('products'))
+                for(let i = 0; i < getStorage.length; i++){
+                    if(JSON.stringify(getStorage[i]).includes(obj.id)){
+                        getStorage[i].quantity++
+                    }
+                }
+                localStorage.setItem('products', JSON.stringify(getStorage))
+            }else{
+                let newItemStore = JSON.parse(localStorage.getItem('products'))
+                newItemStore.push(obj)
+                localStorage.setItem('products', JSON.stringify(newItemStore))
+            }
+            console.log(localStorage)
         })
         
     }
-    
+
 
 
 
