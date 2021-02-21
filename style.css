@@ -11,3 +11,17 @@ img.thumbnail{
     height: 40px;
     width: 40px;
 }
+
+td{
+    text-align: left;
+}
+tfoot{
+    background-color: silver;
+}
+caption{
+    color: rgb(53, 42, 35);
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    caption-side: top;
+}

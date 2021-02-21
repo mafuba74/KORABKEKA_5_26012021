@@ -24,10 +24,10 @@
                      <div id="navbarContent" class="navbar-collapse collapse">
                          <ul class="row navbar-nav">
                             <li class="col nav-item active">
-                                <a class="nav-link" href="#">Acceuil</a>
+                                <a class="nav-link" href="index.html">Acceuil</a>
                             </li>
                             <li class="col nav-item">
-                                <a class="nav-link" href="#" >Panier</a>
+                                <a class="nav-link" href="panier.html" >Panier</a>
                             </li>
                         </ul>
                      </div>
@@ -46,14 +46,19 @@
                 <caption>Mon panier</caption>
 
                 <thead>
-                    <th>Image</th>
+                    <th></th>
                     <th>Nom</th>
                     <th>Prix unitaire</th>
                     <th>Quantité</th>
                     <th>Prix total</th>
                 </thead>
 
-                <tfoot>Prix total de ma commande</tfoot>
+                <tfoot>
+                    <tr>
+                        <td colspan="4">Prix total de ma commande</td>
+                        <td class="total"></td>
+                    </tr>
+                </tfoot>
 
                 <tbody class="items">
 
