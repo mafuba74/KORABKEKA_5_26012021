@@ -63,6 +63,10 @@ class formOrder{
     }
 }
 
+let formHandler = function(){
+
+}
+
 const sendOrder = async function(data){
     let myRequest = await fetch('http://localhost:3000/api/teddies/order', {
         method: 'POST', 
