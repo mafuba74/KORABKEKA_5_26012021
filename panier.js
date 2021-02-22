@@ -49,17 +49,16 @@ class productId{
         this.product_id = product_id
     }
 }
-let products = []
+let myproducts = []
 const getIds =function(data){
     for(let i = 0; i < data.length; i++){
-        let prodId = new productId(data[i]._id)
 
-        products.push(prodId)
+        myproducts.push(data[i]._id)
     }
 }
 getIds(myStorage)
 
-console.log(products)
+console.log(myproducts)
 
 let myForm = document.querySelector('form')
 let submitButton = document.querySelector('#commander')
@@ -73,7 +72,13 @@ class contact{
         this.email = email
     }
 }
-let myFormOrder = new contact('jean', 'dupont', '13 rue mozart', 'paris', 'pseudo@exemple.com')
+let myFormOrder = {
+    firstName: 'jean',
+    lastName: 'dupont',
+    address: '10 avenue boloss',
+    city: 'tours',
+    email: 'a@b.com'
+}
 
 /*let formHandler = function(){
 
@@ -95,4 +100,13 @@ const sendOrder = async function(data){
     }    
 }
 
-sendOrder(myFormOrder + products)
+/*sendOrder({
+    contact: {firstName: 'jean', lastName: 'dupont', address: '13 rue mozart', city: 'paris', email: 'pseudo@exemple.com'},
+    products: [myStorage[0]._id]
+})*/
+
+sendOrder({
+    contact: myFormOrder, products: myproducts
+})
+console.log(myFormOrder)
+
