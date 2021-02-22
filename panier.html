@@ -69,8 +69,35 @@
         </div>
 
         <div class="row">
-            <form method="POST" action="form.js">
+            <form>
+                <p>
+                    <label for="firstname">First name :</label>
+                    <input type="text" name="firstname" id="firstname" placeholder="exemple: Jean" required>
+                </p>
+
+                <p>
+                    <label for="lastname">Last name :</label>
+                    <input type="text" name="lastname" id="lastname" placeholder="exemple: Dupont" required>
+                </p>
+
+                <p>
+                    <label for="adress">Adresse :</label>
+                    <input type="text" name="adress" id="adress" placeholder="exemple: 13 rue Mozart" required>
+                </p>
+
+                <p>
+                    <label for="city">Ville :</label>
+                    <input type="text" name="city" id="city" placeholder="exemple: Paris" required>
+                </p>
                 
+                <p>
+                    <label for="email">Email :</label>
+                    <input type="email" name="email" id="email" placeholder="exemple: pseudo@exemple.com" required>
+                </p>
+
+                <p>
+                    <input type="submit" value="Commander" id="commander">
+                </p>
             </form>
         </div>
     

@@ -1,3 +1,5 @@
+
+
 let myStorage = JSON.parse(localStorage.getItem('products'))
 let itemSection = document.querySelector('.items')
 
@@ -39,3 +41,37 @@ let panier = function(data){
 }
 
 panier(myStorage)
+
+let itemIds = []
+const getIds =function(data){
+    for(let i = 0; i < data.length; i++){
+        itemIds.push(data[i].id)
+    }
+}
+getIds(myStorage)
+
+let myForm = document.querySelector('form')
+let submitButton = document.querySelector('#commander')
+
+class formOrder{
+    constructor(firstName, lastName, adress, city, email){
+        this.firstName = firstName
+        this.lastName = lastName
+        this.adress = adress
+        this.city = city
+        this.email = email
+    }
+}
+
+const sendOrder = async function(data){
+    let myRequest = await fetch('http://localhost:3000/api/teddies/order', {
+        method: 'POST', 
+        headers : {
+            'Content-type' : 'application/json'
+        },
+        body: JSON.stringify(data)})
+    let responseData = await myRequest.json(data)
+    console.log(responseData)
+}
+
+sendOrder(itemIds)
