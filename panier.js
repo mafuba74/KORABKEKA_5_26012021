@@ -61,43 +61,21 @@ getIds(myStorage)
 console.log(myproducts)
 
 let myForm = document.querySelector('form')
+let firstNameInput = document.getElementById('firstname')
+let lastNameInput = document.getElementById('lastname')
+let addressInput = document.getElementById('address')
+let cityInput = document.getElementById('city')
+let emailInput = document.getElementById('email')
 let submitButton = document.querySelector('#commander')
 
-class contact{
-    constructor(firstName, lastName, address, city, email){
-        this.firstName = firstName
-        this.lastName = lastName
-        this.adress = address
-        this.city = city
-        this.email = email
-    }
-}
-let myFormOrder = {
-    firstName: 'jean',
-    lastName: 'dupont',
-    address: '10 avenue boloss',
-    city: 'tours',
-    email: 'a@b.com'
-}
+
 
 /*let formHandler = function(){
 
 }*/
 
 const sendOrder = async function(data){
-    try{
-        let myRequest = await fetch('http://localhost:3000/api/teddies/order', {
-        method: 'POST', 
-        headers : {
-            'Content-type' : 'application/json'
-        },
-        body: JSON.stringify(data)})
-    let responseData = await myRequest.json(data)
-    console.log(responseData)
-    }
-    catch(e){
-        console.log(e)
-    }    
+      
 }
 
 /*sendOrder({
@@ -105,8 +83,63 @@ const sendOrder = async function(data){
     products: [myStorage[0]._id]
 })*/
 
-sendOrder({
-    contact: myFormOrder, products: myproducts
-})
-console.log(myFormOrder)
 
+
+myForm.addEventListener('submit', function(e){
+    e.preventDefault()
+    let myFormOrder = {
+        firstName: firstNameInput.value,
+        lastName: lastNameInput.value,
+        address: addressInput.value,
+        city: cityInput.value,
+        email: emailInput.value
+    }
+    const envoiform = async function(){
+        try{
+        let myRequest = await fetch('http://localhost:3000/api/teddies/order', {
+        method: 'POST', 
+        headers : {
+            'Content-type' : 'application/json'
+        },
+        body: JSON.stringify({contact: myFormOrder, products: myproducts})})
+    let responseData = await myRequest.json({contact: myFormOrder, products: myproducts})
+    // recuperer l'orderId
+    window.location = 'confirmation.html'
+    console.log(responseData)
+    }
+    catch(e){
+        console.log(e)
+    } 
+    } 
+    envoiform()   
+})
+
+
+
+
+/* 
+myForm.addEventListener('submit', function(e) {
+    e.preventDefault()
+
+    let myFormOrder = {
+        firstName: firstNameInput.value,
+        lastName: lastNameInput.value,
+        address: addressInput.value,
+        city: cityInput.value,
+        email: emailInput.value
+    }
+
+        fetch('http://localhost:3000/api/teddies/order', {
+        method: 'POST', 
+        headers : {
+            'Content-type' : 'application/json'
+        },
+        body: JSON.stringify({contact: myFormOrder, products: myproducts})})
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+        })
+        .catch(error => console.error(error))
+
+})
+*/
