@@ -50,9 +50,9 @@ let myRequest = new XMLHttpRequest()
     
 
     class products{
-        constructor(name, id, price, img, quantity){
+        constructor(name, _id, price, img, quantity){
             this.name = name
-            this.id = id
+            this._id = _id
             this.price = price
             this.img = img
             this.quantity = quantity
@@ -73,10 +73,10 @@ let myRequest = new XMLHttpRequest()
             if(localStorage.getItem('products') == null){
                 prodTable.push(obj)
                 localStorage.setItem('products', JSON.stringify(prodTable))
-            }else if(localStorage.getItem('products').includes(obj.id)){
+            }else if(localStorage.getItem('products').includes(obj._id)){
                 let getStorage = JSON.parse(localStorage.getItem('products'))
                 for(let i = 0; i < getStorage.length; i++){
-                    if(JSON.stringify(getStorage[i]).includes(obj.id)){
+                    if(JSON.stringify(getStorage[i]).includes(obj._id)){
                         getStorage[i].quantity++
                     }
                 }
