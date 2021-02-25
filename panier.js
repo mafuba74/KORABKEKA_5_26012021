@@ -70,20 +70,14 @@ let submitButton = document.querySelector('#commander')
 
 
 
-/*let formHandler = function(){
-
-}*/
-
-const sendOrder = async function(data){
-      
+let formHandler = function(inputs){
+    inputs.addEventListener('input', function(e){
+        if(inputs.value === "" || inputs.value === null){
+            return false
+        }else if()
+    })
+    
 }
-
-/*sendOrder({
-    contact: {firstName: 'jean', lastName: 'dupont', address: '13 rue mozart', city: 'paris', email: 'pseudo@exemple.com'},
-    products: [myStorage[0]._id]
-})*/
-
-
 
 myForm.addEventListener('submit', function(e){
     e.preventDefault()
