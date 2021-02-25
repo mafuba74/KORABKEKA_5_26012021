@@ -68,16 +68,23 @@ let cityInput = document.getElementById('city')
 let emailInput = document.getElementById('email')
 let submitButton = document.querySelector('#commander')
 
+let regexNames = /^[A-Za-z\u00C0-\u00FF][A-Za-z\u00C0-\u00FF-]{1,20}$/g
+//let regexNames = /^\w{2,20}/g
 
 
-let formHandler = function(inputs){
+let formHandler = function(inputs, regex){
     inputs.addEventListener('input', function(e){
-        if(inputs.value == "" || inputs.value == null){
+        if(inputs.value.length == 0){
             return false
-        }else if()
+        }else if(regex.test(inputs.value) == true){
+            return true
+        }else{
+            return false
+        }
     })
     
 }
+formHandler(firstNameInput, regexNames)
 
 myForm.addEventListener('submit', function(e){
     e.preventDefault()
