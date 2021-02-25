@@ -72,7 +72,7 @@ let submitButton = document.querySelector('#commander')
 
 let formHandler = function(inputs){
     inputs.addEventListener('input', function(e){
-        if(inputs.value === "" || inputs.value === null){
+        if(inputs.value == "" || inputs.value == null){
             return false
         }else if()
     })
