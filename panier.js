@@ -60,7 +60,9 @@ getIds(myStorage)
 
 console.log(myproducts)
 
+
 let myForm = document.querySelector('form')
+let formFields = myForm.querySelectorAll('input')
 let firstNameInput = document.getElementById('firstname')
 let lastNameInput = document.getElementById('lastname')
 let addressInput = document.getElementById('address')
@@ -68,27 +70,50 @@ let cityInput = document.getElementById('city')
 let emailInput = document.getElementById('email')
 let submitButton = document.querySelector('#commander')
 
-let regexNames = /^[A-Za-z\u00C0-\u00FF][A-Za-z\u00C0-\u00FF-]{1,20}$/g
-//let regexNames = /^\w{2,20}/g
+let inputCount = 0
+let regexNames = /^[A-Za-z\u00C0-\u00FF][A-Za-z\u00C0-\u00FF-]{1,20}(?<!-)$/
+let regexAddress = /^[A-Za-z0-9\u00C0-\u00FF][A-Za-z0-9\u00C0-\u00FF-' ]{10,35}(?<!-)$/
 
+class formular{
+    constructor(dominputvalue, regex, validity){
+        this.dominputvalue = dominputvalue
+        this.regex = regex
+        this.validity = validity
+    }
 
-let formHandler = function(inputs, regex){
-    inputs.addEventListener('input', function(e){
-        if(inputs.value.length == 0){
-            return false
-        }else if(regex.test(inputs.value) == true){
-            return true
-        }else{
-            return false
+    testValue(){
+        console.log(this.regex)
+        console.log(this.dominputvalue)
+        if(this.regex.test(this.dominputvalue) == true){
+            this.validity = true
+            inputCount++
+            
         }
-    })
-    
+    }
 }
-formHandler(firstNameInput, regexNames)
+
 
 myForm.addEventListener('submit', function(e){
     e.preventDefault()
-    let myFormOrder = {
+    let firstNameValue = firstNameInput.value
+    let lastNameValue = lastNameInput.value
+    let addressValue = addressInput.value
+    let cityValue = cityInput.value
+    let emailValue = emailInput.value
+
+    let firstName = new formular(firstNameValue, regexNames, false)
+    let lastName = new formular( lastNameValue, regexNames, false)
+    let address = new formular(addressValue, regexAddress, false)
+    let city = new formular(cityValue, regexNames, false)
+    let email = new formular(emailValue, regexAddress, false)
+
+    let formArray = [firstName, lastName, address, city, email]
+    for(let i = 0; i < formArray.length; i++){
+        formArray[i].testValue()
+        console.log(formArray[i].validity)
+    }
+    if(inputCount === formArray.length){
+        let myFormOrder = {
         firstName: firstNameInput.value,
         lastName: lastNameInput.value,
         address: addressInput.value,
@@ -105,14 +130,16 @@ myForm.addEventListener('submit', function(e){
         body: JSON.stringify({contact: myFormOrder, products: myproducts})})
     let responseData = await myRequest.json({contact: myFormOrder, products: myproducts})
     // recuperer l'orderId
-    window.location = 'confirmation.html'
+    //window.location = 'confirmation.html'
     console.log(responseData)
     }
     catch(e){
         console.log(e)
     } 
     } 
-    envoiform()   
+    envoiform() 
+    }
+      
 })
 
 
