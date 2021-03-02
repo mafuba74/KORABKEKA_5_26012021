@@ -25,3 +25,8 @@ caption{
     font-weight: bold;
     caption-side: top;
 }
+
+.invalid{
+    border: rgb(105, 29, 29);
+    background-color: rgba(197, 85, 85, 0.8);
+}

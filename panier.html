@@ -68,31 +68,36 @@
             
         </div>
 
-        <div class="row">
-            <form method='POST'>
+        <div class="row jumbotron">
+            <form method='POST' class="col-md-8 m-auto">
                 <p>
                     <label for="firstname">First name :</label>
-                    <input type="text" name="firstname" id="firstname" placeholder="exemple: Jean" required>
+                    <input type="text" name="firstname" id="firstname" placeholder="exemple: Jean" class="form-control" aria-describedby="firstNameInfo" required>
+                    <span id="firstNameInfo" class="form-text">Veuillez entrer un prénom valide</span>
                 </p>
 
                 <p>
                     <label for="lastname">Last name :</label>
-                    <input type="text" name="lastname" id="lastname" placeholder="exemple: Dupont" required>
+                    <input type="text" name="lastname" id="lastname" placeholder="exemple: Dupont" class="form-control" aria-describedby="lastNameInfo" required>
+                    <span id="lastNameInfo" class="form-text">Veuillez entrer un nom valide</span>
                 </p>
 
                 <p>
                     <label for="address">Adresse :</label>
-                    <input type="text" name="address" id="address" placeholder="exemple: 13 rue Mozart" required>
+                    <input type="text" name="address" id="address" placeholder="exemple: 13 rue Mozart" class="form-control" aria-describedby="addressInfo" required>
+                    <span id="addressInfo" class="form-text">Veuillez entrer une adresse valide</span>
                 </p>
 
                 <p>
                     <label for="city">Ville :</label>
-                    <input type="text" name="city" id="city" placeholder="exemple: Paris" required>
+                    <input type="text" name="city" id="city" placeholder="exemple: Paris" class="form-control" aria-describedby="cityInfo" required>
+                    <span id="cityInfo" class="form-text">Veuillez entrer une ville valide</span>
                 </p>
                 
                 <p>
                     <label for="email">Email :</label>
-                    <input type="text" name="email" id="email" placeholder="exemple: pseudo@exemple.com" required>
+                    <input type="text" name="email" id="email" placeholder="exemple: pseudo@exemple.com" class="form-control" aria-describedby="emailInfo" required>
+                    <span id="emailInfo" class="form-text">Veuillez entrer un email valide</span>
                 </p>
 
                 <p>

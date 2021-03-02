@@ -63,31 +63,56 @@ console.log(myproducts)
 
 let myForm = document.querySelector('form')
 let formFields = myForm.querySelectorAll('input')
+
 let firstNameInput = document.getElementById('firstname')
+let infoFirstName = document.getElementById('firstNameInfo')
+let nameError = 'Attention, cette saisie est invalide, veuillez vérifier l\'orthographe et l\'absence de caractère inadéquats'
+
 let lastNameInput = document.getElementById('lastname')
+let infoLastName = document.getElementById('lastNameInfo')
+
+
 let addressInput = document.getElementById('address')
+let infoAddress = document.getElementById('addressInfo')
+let addressError = 'Attention, cette adresse est invalide, veuillez verifier l\'orthographe de votre saisie'
+
+
 let cityInput = document.getElementById('city')
+let infoCity = document.getElementById('cityInfo')
+let cityError = 'Attention, ce nom de ville est invalide, veuillez verifier l\'orthographe de votre saisie'
+
 let emailInput = document.getElementById('email')
+let infoEmail = document.getElementById('emailInfo')
+let emailError = 'attention cet email est invalide, veuillez vérifier votre saisie'
+
+
 let submitButton = document.querySelector('#commander')
 
 let inputCount = 0
 let regexNames = /^[A-Za-z\u00C0-\u00FF][A-Za-z\u00C0-\u00FF-]{1,20}(?<!-)$/
 let regexAddress = /^[A-Za-z0-9\u00C0-\u00FF][A-Za-z0-9\u00C0-\u00FF-' ]{10,35}(?<!-)$/
+let regexCity = /^[A-Za-z\u00C0-\u00FF][A-Za-z\u00C0-\u00FF-' ]+(?<!-)$/
+let regexEmail = /^[ A-Za-z0-9][\w-]*@[\w-]+\.[A-Za-z]{2,}$/
 
 class formular{
-    constructor(dominputvalue, regex, validity){
+    constructor(dominput, dominputvalue, infoNode, errorInfo, regex, validity){
+        this.dominput = dominput
         this.dominputvalue = dominputvalue
+        this.infoNode = infoNode
+        this.errorInfo = errorInfo
         this.regex = regex
         this.validity = validity
     }
 
     testValue(){
-        console.log(this.regex)
-        console.log(this.dominputvalue)
         if(this.regex.test(this.dominputvalue) == true){
             this.validity = true
             inputCount++
-            
+            console.log(inputCount)           
+        }else{
+            this.dominput.setAttribute('class', 'invalid')
+            this.infoNode.style.color = 'red'
+            this.infoNode.textContent = this.errorInfo
         }
     }
 }
@@ -101,45 +126,47 @@ myForm.addEventListener('submit', function(e){
     let cityValue = cityInput.value
     let emailValue = emailInput.value
 
-    let firstName = new formular(firstNameValue, regexNames, false)
-    let lastName = new formular( lastNameValue, regexNames, false)
-    let address = new formular(addressValue, regexAddress, false)
-    let city = new formular(cityValue, regexNames, false)
-    let email = new formular(emailValue, regexAddress, false)
+    let firstName = new formular(firstNameInput, firstNameValue, infoFirstName, nameError, regexNames, false)
+    let lastName = new formular(lastNameInput, lastNameValue, infoLastName, nameError, regexNames, false)
+    let address = new formular(addressInput, addressValue, infoAddress, addressError, regexAddress, false)
+    let city = new formular(cityInput, cityValue, infoCity, cityError, regexCity, false)
+    let email = new formular(emailInput, emailValue, infoEmail, emailError, regexEmail, false)
 
     let formArray = [firstName, lastName, address, city, email]
+
     for(let i = 0; i < formArray.length; i++){
         formArray[i].testValue()
-        console.log(formArray[i].validity)
     }
     if(inputCount === formArray.length){
         let myFormOrder = {
-        firstName: firstNameInput.value,
-        lastName: lastNameInput.value,
-        address: addressInput.value,
-        city: cityInput.value,
-        email: emailInput.value
-    }
+            firstName: firstNameInput.value,
+            lastName: lastNameInput.value,
+            address: addressInput.value,
+            city: cityInput.value,
+            email: emailInput.value
+        }
     const envoiform = async function(){
         try{
-        let myRequest = await fetch('http://localhost:3000/api/teddies/order', {
-        method: 'POST', 
-        headers : {
-            'Content-type' : 'application/json'
-        },
-        body: JSON.stringify({contact: myFormOrder, products: myproducts})})
-    let responseData = await myRequest.json({contact: myFormOrder, products: myproducts})
-    // recuperer l'orderId
-    //window.location = 'confirmation.html'
-    console.log(responseData)
+            let myRequest = await fetch('http://localhost:3000/api/teddies/order', {
+            method: 'POST', 
+            headers : {
+                'Content-type' : 'application/json'
+            },
+            body: JSON.stringify({contact: myFormOrder, products: myproducts})})
+            let responseData =await myRequest.json({contact: myFormOrder, products: myproducts})
+            localStorage.setItem('Orinoco-my-order', JSON.stringify(responseData))
+            window.location = 'confirmation.html'
+            console.log(responseData)
+            console.log(localStorage)
+        }catch(e){
+            inputCount = 0
+            console.log(e)
+        }     
     }
-    catch(e){
-        console.log(e)
-    } 
-    } 
-    envoiform() 
-    }
-      
+    envoiform()
+    }else{
+        inputCount = 0
+    }  
 })
 
 
