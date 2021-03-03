@@ -94,7 +94,7 @@ let regexAddress = /^[A-Za-z0-9\u00C0-\u00FF][A-Za-z0-9\u00C0-\u00FF-' ]{10,35}(
 let regexCity = /^[A-Za-z\u00C0-\u00FF][A-Za-z\u00C0-\u00FF-' ]+(?<!-)$/
 let regexEmail = /^[ A-Za-z0-9][\w-]*@[\w-]+\.[A-Za-z]{2,}$/
 
-class formular{
+class Formular{
     constructor(dominput, dominputvalue, infoNode, errorInfo, regex, validity){
         this.dominput = dominput
         this.dominputvalue = dominputvalue
@@ -126,11 +126,11 @@ myForm.addEventListener('submit', function(e){
     let cityValue = cityInput.value
     let emailValue = emailInput.value
 
-    let firstName = new formular(firstNameInput, firstNameValue, infoFirstName, nameError, regexNames, false)
-    let lastName = new formular(lastNameInput, lastNameValue, infoLastName, nameError, regexNames, false)
-    let address = new formular(addressInput, addressValue, infoAddress, addressError, regexAddress, false)
-    let city = new formular(cityInput, cityValue, infoCity, cityError, regexCity, false)
-    let email = new formular(emailInput, emailValue, infoEmail, emailError, regexEmail, false)
+    let firstName = new Formular(firstNameInput, firstNameValue, infoFirstName, nameError, regexNames, false)
+    let lastName = new Formular(lastNameInput, lastNameValue, infoLastName, nameError, regexNames, false)
+    let address = new Formular(addressInput, addressValue, infoAddress, addressError, regexAddress, false)
+    let city = new Formular(cityInput, cityValue, infoCity, cityError, regexCity, false)
+    let email = new Formular(emailInput, emailValue, infoEmail, emailError, regexEmail, false)
 
     let formArray = [firstName, lastName, address, city, email]
 
