@@ -1,9 +1,26 @@
 
-
+/**
+ * myStorage récupère le local storage au JSON et le parse
+ */
 let myStorage = JSON.parse(localStorage.getItem('products'))
 console.log(myStorage)
+
+//si le local storage est vide on affiche un message qui indique que le panier est vide
+if(localStorage.products == undefined){
+    document.querySelector('table').style.display = 'none'
+    let emptyPanier = document.createElement('h2')
+    emptyPanier.style.color = 'red'
+    emptyPanier.textContent = "Votre panier est vide"
+    let panierSection = document.querySelector('.panier-bloc')
+    panierSection.appendChild(emptyPanier)
+}
+
 let itemSection = document.querySelector('.items')
 
+/**
+ * 
+ * récupère les donnés et créé le tableau du panier  
+ */
 let panier = function(data){
     let totalprices = []
     for(let i = 0; i < data.length; i++){
@@ -41,6 +58,7 @@ let panier = function(data){
     totalPanier.innerHTML = totalPrice
 }
 
+//panier traite les données de myStorage 
 panier(myStorage)
 
 
@@ -49,7 +67,13 @@ class productId{
         this.product_id = product_id
     }
 }
+
 let myproducts = []
+
+/**
+ * 
+ * getIds récupère les id des différents teddy's présent dans le localStorage et les mets dans le tableau myproducts 
+ */
 const getIds =function(data){
     for(let i = 0; i < data.length; i++){
 
@@ -60,7 +84,9 @@ getIds(myStorage)
 
 console.log(myproducts)
 
-
+/**
+ * partie formulaire
+ */
 let myForm = document.querySelector('form')
 let formFields = myForm.querySelectorAll('input')
 
@@ -89,6 +115,8 @@ let emailError = 'attention cet email est invalide, veuillez vérifier votre sai
 let submitButton = document.querySelector('#commander')
 
 let inputCount = 0
+
+//regex pour le formulaire
 let regexNames = /^[A-Za-z\u00C0-\u00FF][A-Za-z\u00C0-\u00FF-]{1,20}(?<!-)$/
 let regexAddress = /^[A-Za-z0-9\u00C0-\u00FF][A-Za-z0-9\u00C0-\u00FF-' ]{10,35}(?<!-)$/
 let regexCity = /^[A-Za-z\u00C0-\u00FF][A-Za-z\u00C0-\u00FF-' ]+(?<!-)$/
@@ -103,7 +131,11 @@ class Formular{
         this.regex = regex
         this.validity = validity
     }
-
+    /**
+     * testValue test l'input de l'utilisateur avec le regex
+     * si l'input est correct passe validity à true et incrément l'inputCount
+     * autrement affiche un message à l'utilisateur pour lui indiquer que son input est mauvais
+     */
     testValue(){
         if(this.regex.test(this.dominputvalue) == true){
             this.validity = true
@@ -117,7 +149,9 @@ class Formular{
     }
 }
 
-
+/**
+ * on soumet le formulaire et on l'envoi à l'api qui nous retourne notre commande, le contenu du formulaire et un id de commande
+ */
 myForm.addEventListener('submit', function(e){
     e.preventDefault()
     let firstNameValue = firstNameInput.value
@@ -133,7 +167,7 @@ myForm.addEventListener('submit', function(e){
     let email = new Formular(emailInput, emailValue, infoEmail, emailError, regexEmail, false)
 
     let formArray = [firstName, lastName, address, city, email]
-
+    // on teste chaque instance Formular dans formArray 
     for(let i = 0; i < formArray.length; i++){
         formArray[i].testValue()
     }
@@ -145,6 +179,12 @@ myForm.addEventListener('submit', function(e){
             city: cityInput.value,
             email: emailInput.value
         }
+        /**
+         * envoiform est une fonction asynchrone qui fait une requete ajax grace à la méthode fetch
+         * elle envoi un objet qui contient les valeurs des différents input du formulaire et un tableau des id des teddy's de notre panier
+         * elle récupère la réponse de la requete et la met dans le local storage avec la key 'Orinoco-my-order'
+         * et redirige l'utilisateur vers la page de confirmation de commande
+         */
     const envoiform = async function(){
         try{
             let myRequest = await fetch('http://localhost:3000/api/teddies/order', {

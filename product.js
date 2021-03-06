@@ -1,4 +1,4 @@
-//récupère l'url et la separe 
+//récupère l'url et la separe l'url de la page produit et l'id du teddy associé
 let urlInfo = window.location.href
 let urlSplit = urlInfo.split('?')
 
@@ -11,7 +11,7 @@ let selectColor = document.querySelector('#choose-color')
 
 //requete ajax
 let myRequest = new XMLHttpRequest()
-    
+    //parse la responsetextJSON de la requette
     myRequest.onreadystatechange = function(){
         if(this.readyState == XMLHttpRequest.DONE && this.status == 200){
             let results = JSON.parse(this.responseText)
@@ -56,17 +56,16 @@ let myRequest = new XMLHttpRequest()
             this.price = price
             this.img = img
             this.quantity = quantity
-        }
-        addQuantity(){
-            this.quantity++
-        }
-        
+        }    
     }
-
+    /**
+     * 
+     * storageItem prend l'objet correspondant à l'id de l'url
+     * l'ajoute au localstorage s'il n'y est pas encore ou incrémente 
+     * sa quantité s'il s'y trouve déjà 
+     */
     let storageItem = function(obj){
         button.addEventListener('click', function(e){
-            
-            //e.preventDefault()
 
             let prodTable = []
             
@@ -86,9 +85,9 @@ let myRequest = new XMLHttpRequest()
                 newItemStore.push(obj)
                 localStorage.setItem('products', JSON.stringify(newItemStore))
             }
+            alert('ajouté au panier!')
             console.log(localStorage)
-        })
-        
+        })        
     }
 
 

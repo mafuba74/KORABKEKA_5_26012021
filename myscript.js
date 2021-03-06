@@ -1,6 +1,10 @@
-
+/*
+*
+*myRequest = requete ajax
+*retourne les objets teddy's en JSON 
+*/
     let myRequest = new XMLHttpRequest()
-    
+    //parse le JSON 
     myRequest.onreadystatechange = function(){
         if(this.readyState == XMLHttpRequest.DONE && this.status == 200){
             let results = JSON.parse(this.responseText)
@@ -12,7 +16,11 @@
     myRequest.send()
     
     let cardBody = document.querySelectorAll('.card-body')
-    
+    /*
+    *
+    *cardBuilder récupère les items parsés et construit les 'card-body's    
+    *
+    */ 
     let cardBuilder = function(data) {
 
         for(let i = 0; i < data.length; i++){
