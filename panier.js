@@ -62,11 +62,11 @@ let panier = function(data){
 panier(myStorage)
 
 
-class productId{
+/*class productId{
     constructor(product_id){
         this.product_id = product_id
     }
-}
+}*/
 
 let myproducts = []
 
@@ -193,7 +193,9 @@ myForm.addEventListener('submit', function(e){
                 'Content-type' : 'application/json'
             },
             body: JSON.stringify({contact: myFormOrder, products: myproducts})})
+
             let responseData =await myRequest.json({contact: myFormOrder, products: myproducts})
+            
             localStorage.setItem('Orinoco-my-order', JSON.stringify(responseData))
             window.location = 'confirmation.html'
             console.log(responseData)
